@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { MoreHorizontal, Users, TrendingUp, TrendingDown } from 'lucide-react';
 import { FrontendTeamData } from '@/types';
-import { Button } from '@/Components/ui/button';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/Components/ui/dropdown-menu';
+} from '@/components/ui/dropdown-menu';
 import { ChangeTeamDialog } from './ChangeTeamDialog';
 
 interface TeamTableProps {

@@ -1,9 +1,9 @@
 import { useState, useMemo } from 'react';
 import { Bell, Search, ChevronDown, Moon, Sun } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useTheme } from '../../Contexts/ThemeContext';
+import { useTheme } from '../../contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
-import { Input } from '@/Components/ui/input';
+import { Input } from '@/components/ui/input';
 import { SalesRecord } from '@/types';
 
 interface HeaderProps {

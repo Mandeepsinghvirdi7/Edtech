@@ -1,19 +1,19 @@
 import { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { DashboardLayout } from '@/Components/layout/DashboardLayout';
-import { Header } from '@/Components/layout/Header';
-import { KPICard } from '@/Components/dashboard/KPICard';
-import { PerformanceChart } from '@/Components/dashboard/PerformanceChart';
-import { TeamTable } from '@/Components/dashboard/TeamTable';
-import { FilterBar } from '@/Components/dashboard/FilterBar';
-import { MonthlyPerformanceTable } from '@/Components/dashboard/MonthlyPerformanceTable';
-import { FullAchieversModal } from '@/Components/dashboard/FullAchieversModal';
-import { TeamPopupChart } from '@/Components/dashboard/TeamPopupChart';
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
+import { Header } from '@/components/layout/Header';
+import { KPICard } from '@/components/dashboard/KPICard';
+import { PerformanceChart } from '@/components/dashboard/PerformanceChart';
+import { TeamTable } from '@/components/dashboard/TeamTable';
+import { FilterBar } from '@/components/dashboard/FilterBar';
+import { MonthlyPerformanceTable } from '@/components/dashboard/MonthlyPerformanceTable';
+import { FullAchieversModal } from '@/components/dashboard/FullAchieversModal';
+import { TeamPopupChart } from '@/components/dashboard/TeamPopupChart';
 import { getKPIData, getTeamData, getMonthlyChartData, getTopAchieversData, MONTHS as fiscalMonthOrder } from '@/data/dataProcess';
 import { api } from '@/lib/api';
-import { BdePerformanceModal } from '@/Components/dashboard/BdePerformanceModal';
+import { BdePerformanceModal } from '@/components/dashboard/BdePerformanceModal';
 import { SalesRecord, User } from '@/types';
-import { Skeleton } from '@/Components/ui/skeleton';
+import { Skeleton } from '@/components/ui/skeleton';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function Dashboard() {

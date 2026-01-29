@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/contexts/AuthContext';
-import { useTheme } from '@/Contexts/ThemeContext';
+import { useTheme } from '@/contexts/ThemeContext';
 import {
   LayoutDashboard,
   Upload,

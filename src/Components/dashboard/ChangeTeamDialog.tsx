@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Button } from '@/Components/ui/button';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -7,17 +7,17 @@ import {
   DialogTitle,
   DialogFooter,
   DialogDescription,
-} from '@/Components/ui/dialog';
+} from '@/components/ui/dialog';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/Components/ui/select';
-import { Label } from '@/Components/ui/label';
+} from '@/components/ui/select';
+import { Label } from '@/components/ui/label';
 import { api } from '@/lib/api';
-import { useToast } from '@/Components/ui/use-toast';
+import { useToast } from '@/components/ui/use-toast';
 import { SalesRecord, TeamData } from '@/types';
 
 interface ChangeTeamDialogProps {

@@ -5,7 +5,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from '@/Components/ui/dialog';
+} from '@/components/ui/dialog';
 import { PerformanceChart } from './PerformanceChart';
 import { getBDEChartData } from '@/data/dataProcess';
 import { SalesRecord } from '@/types';

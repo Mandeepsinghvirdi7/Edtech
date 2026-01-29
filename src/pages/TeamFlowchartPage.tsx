@@ -1,12 +1,12 @@
 import { useState, useMemo, useEffect } from 'react';
-import { DashboardLayout } from '@/Components/layout/DashboardLayout';
-import { Header } from '@/Components/layout/Header';
-import { TeamFlowchart } from '@/Components/dashboard/TeamFlowchart';
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
+import { Header } from '@/components/layout/Header';
+import { TeamFlowchart } from '@/components/dashboard/TeamFlowchart';
 import { getTeamData } from '@/data/dataProcess';
 import { api } from '@/lib/api';
 import { SalesRecord } from '@/types';
-import { Skeleton } from '@/Components/ui/skeleton';
-import { FilterBar } from '@/Components/dashboard/FilterBar';
+import { Skeleton } from '@/components/ui/skeleton';
+import { FilterBar } from '@/components/dashboard/FilterBar';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function TeamFlowchartPage() {

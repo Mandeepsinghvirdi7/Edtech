@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { DashboardLayout } from '@/Components/layout/DashboardLayout';
-import { Header } from '@/Components/layout/Header';
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
+import { Header } from '@/components/layout/Header';
 import { api } from '@/lib/api';
 import {
   Upload,

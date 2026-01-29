@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { DashboardLayout } from '@/Components/layout/DashboardLayout';
-import { Header } from '@/Components/layout/Header';
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
+import { Header } from '@/components/layout/Header';
 import { api } from '@/lib/api';
 import { SalesRecord, User } from '@/types';
 import { MONTHS } from '@/data/dataProcess';
@@ -12,13 +12,13 @@ import {
   User as UserIcon,
   ArrowRightLeft
 } from 'lucide-react';
-import { useToast } from '@/Components/ui/use-toast';
-import { Button } from '@/Components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/Components/ui/select';
-import { Label } from '@/Components/ui/label';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from '@/Components/ui/dialog';
-import { Switch } from '@/Components/ui/switch';
-import { Input } from '@/Components/ui/input';
+import { useToast } from '@/components/ui/use-toast';
+import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Label } from '@/components/ui/label';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from '@/components/ui/dialog';
+import { Switch } from '@/components/ui/switch';
+import { Input } from '@/components/ui/input';
 
 interface TeamMember {
   bdeName: string;

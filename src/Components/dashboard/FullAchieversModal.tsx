@@ -1,20 +1,20 @@
 import { motion } from 'framer-motion';
 import { Trophy, Medal, Award } from 'lucide-react';
 import { TopAchiever } from '@/data/dataProcess';
-import { Button } from '@/Components/ui/button';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@/Components/ui/dialog';
+} from '@/components/ui/dialog';
 import { PerformanceChart } from './PerformanceChart';
 import { getBDEChartData } from '@/data/dataProcess';
 import { api } from '@/lib/api';
 import { SalesRecord } from '@/types';
 import { useState, useEffect, useMemo } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { ScrollArea } from '@/Components/ui/scroll-area';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { canUserClickBDEName, canUserViewBDEChart } from '@/lib/sharedUtilities';
 
 interface FullAchieversModalProps {

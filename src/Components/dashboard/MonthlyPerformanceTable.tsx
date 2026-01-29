@@ -1,13 +1,13 @@
 import { motion } from 'framer-motion';
 import { Trophy, Medal, Award, ChevronDown, Filter } from 'lucide-react';
 import { TopAchiever } from '@/data/dataProcess';
-import { Button } from '@/Components/ui/button';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@/Components/ui/dialog';
+} from '@/components/ui/dialog';
 import { PerformanceChart } from './PerformanceChart';
 import { getBDEChartData } from '@/data/dataProcess';
 import { api } from '@/lib/api';

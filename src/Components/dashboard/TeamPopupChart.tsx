@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/Components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { PerformanceChart } from './PerformanceChart';
 import { getMonthlyChartData } from '@/data/dataProcess';
 import { SalesRecord } from '@/types';

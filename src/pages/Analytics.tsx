@@ -7,21 +7,21 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/Components/ui/select';
-import { DashboardLayout } from '@/Components/layout/DashboardLayout';
-import { Header } from '@/Components/layout/Header';
-import { PerformanceChart } from '@/Components/dashboard/PerformanceChart';
-import { Button } from '@/Components/ui/button';
+} from '@/components/ui/select';
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
+import { Header } from '@/components/layout/Header';
+import { PerformanceChart } from '@/components/dashboard/PerformanceChart';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@/Components/ui/dialog';
+} from '@/components/ui/dialog';
 import { getBDEData, getBDEChartData, BDEData } from '@/data/dataProcess';
 import { api } from '@/lib/api';
 import { SalesRecord } from '@/types';
-import { Skeleton } from '@/Components/ui/skeleton';
+import { Skeleton } from '@/components/ui/skeleton';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function Analytics() {

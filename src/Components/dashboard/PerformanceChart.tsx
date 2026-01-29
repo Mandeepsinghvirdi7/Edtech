@@ -18,7 +18,7 @@ import { Chart } from 'react-chartjs-2';
 import { Download } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { ChartDataPoint } from '@/types';
-import { useTheme } from '@/Contexts/ThemeContext';
+import { useTheme } from '@/contexts/ThemeContext';
 
 ChartJS.register(
   CategoryScale,
