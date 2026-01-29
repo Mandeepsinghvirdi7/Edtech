@@ -34,6 +34,21 @@ if (FRONTEND_URL) {
 }
 app.use(express.json());
 
+// DB connection middleware for serverless - Moved to top
+app.use(async (req, res, next) => {
+    try {
+        const db = getDB();
+        if (!db) {
+            console.log('Middleware: Connecting to MongoDB...');
+            await connectToDB();
+        }
+        next();
+    } catch (error) {
+        console.error('DB Connection error in middleware:', error);
+        res.status(500).json({ error: 'Database connection failed' });
+    }
+});
+
 // MongoDB Setup for import
 const DB_NAME = 'hike_dashboard_db';
 const SALES_RECORDS_COLLECTION = 'sales_records';
@@ -74,7 +89,7 @@ const fileToRows = (buffer, mimetype, originalname) => {
             if (isCsv) {
                 const results = [];
                 const stream = Readable.from(buffer.toString('utf8'));
-                
+
                 stream.pipe(csv())
                     .on('data', (data) => results.push(data))
                     .on('end', () => {
@@ -151,7 +166,7 @@ app.post('/api/login', async (req, res) => {
             console.log(`[LOGIN FAILED] Password mismatch.`);
             return res.status(401).json({ ok: false, message: 'Invalid user or password' });
         }
-        
+
         console.log(`[LOGIN SUCCESS] User "${userId}" authenticated successfully.`);
         // Determine branch access based on role
         let branches = [];
@@ -203,90 +218,90 @@ const normalizeMonth = (month) => {
  */
 const ALLOWED_HEADERS = {
     // STRING FIELDS - Identifiers and categorical data
-    'FY': { 
-        required: true, 
-        dbField: 'fy', 
+    'FY': {
+        required: true,
+        dbField: 'fy',
         type: 'string',
         description: 'Fiscal Year (e.g., 2025)'
     },
-    'Month': { 
-        required: true, 
-        dbField: 'month', 
+    'Month': {
+        required: true,
+        dbField: 'month',
         type: 'string',
         description: 'Month name (APRIL-MARCH cycle)'
     },
-    'DBM': { 
-        required: true, 
-        dbField: 'dbm', 
+    'DBM': {
+        required: true,
+        dbField: 'dbm',
         type: 'string',
         description: 'Deputy Branch Manager - team supervisor'
     },
-    'Team Leader': { 
-        required: true, 
-        dbField: 'teamLeader', 
+    'Team Leader': {
+        required: true,
+        dbField: 'teamLeader',
         type: 'string',
         description: 'Team Leader - manages a team of BDEs'
     },
-    'BDE': { 
-        required: true, 
-        dbField: 'bdeName', 
+    'BDE': {
+        required: true,
+        dbField: 'bdeName',
         type: 'string',
         description: 'Business Development Executive - individual performer'
     },
 
     // NUMERIC FIELDS - Measurements and KPIs (all default to 0)
-    'Target': { 
-        required: true, 
-        dbField: 'target', 
+    'Target': {
+        required: true,
+        dbField: 'target',
         type: 'number',
         defaultValue: 0,
         description: 'Sales target for the period'
     },
-    'Admissions': { 
-        required: true, 
-        dbField: 'admissions', 
+    'Admissions': {
+        required: true,
+        dbField: 'admissions',
         type: 'number',
         defaultValue: 0,
         description: 'Total admissions achieved'
     },
-    'Points': { 
-        required: true, 
-        dbField: 'points', 
+    'Points': {
+        required: true,
+        dbField: 'points',
         type: 'number',
         defaultValue: 0,
         description: 'Points earned (metric for performance)'
     },
-    'Closed Admissions': { 
-        required: true, 
-        dbField: 'closedAdm', 
+    'Closed Admissions': {
+        required: true,
+        dbField: 'closedAdm',
         type: 'number',
         defaultValue: 0,
         description: 'Closed/finalized admissions'
     },
-    'Cancellation/backout': { 
-        required: true, 
-        dbField: 'cancellation', 
+    'Cancellation/backout': {
+        required: true,
+        dbField: 'cancellation',
         type: 'number',
         defaultValue: 0,
         description: 'Cancellations or backouts'
     },
-    'Incomplete Form': { 
-        required: true, 
-        dbField: 'incomplete', 
+    'Incomplete Form': {
+        required: true,
+        dbField: 'incomplete',
         type: 'number',
         defaultValue: 0,
         description: 'Incomplete form submissions'
     },
-    'Closed Point': { 
-        required: true, 
-        dbField: 'closedPoints', 
+    'Closed Point': {
+        required: true,
+        dbField: 'closedPoints',
         type: 'number',
         defaultValue: 0,
         description: 'Points on closed admissions (= Closed Admissions)'
     },
-    'Target %': { 
-        required: true, 
-        dbField: 'targetPct', 
+    'Target %': {
+        required: true,
+        dbField: 'targetPct',
         type: 'number',
         defaultValue: 0,
         description: 'Target achievement percentage'
@@ -529,8 +544,8 @@ const validateAndNormalizeHeaders = (rawHeaders) => {
 const normalizeHeader = (header) => {
     if (!header) return null;
     const normalized = String(header).trim()
-                             .replace(/[\s\/_.-]/g, '')
-                             .toLowerCase();
+        .replace(/[\s\/_.-]/g, '')
+        .toLowerCase();
 
     switch (normalized) {
         case 'fy': return 'fy';
@@ -612,20 +627,20 @@ const transformToSalesRecords = async (normalizedRows, branchName) => {
             teamLeader = String(row['supervisor']).trim();
         }
 
-                    const record = {
-                        fy: row['fy'] || '2025',
-                        month: normalizeMonth(row['month']),
-                        branch: branchName,
-                        drive: driveName,
-                        dbm: dbm,
-                        teamLeader: teamLeader,
-                        teamName: teamLeader, // Default to team leader name
-                        bdeName: bdeName,
-                        target: target,
-                        admissions: parseInt(row['admissions'] || 0),
-                        closedPoints: closedPoints,
-                        achievementPct: achievement,
-                    };
+        const record = {
+            fy: row['fy'] || '2025',
+            month: normalizeMonth(row['month']),
+            branch: branchName,
+            drive: driveName,
+            dbm: dbm,
+            teamLeader: teamLeader,
+            teamName: teamLeader, // Default to team leader name
+            bdeName: bdeName,
+            target: target,
+            admissions: parseInt(row['admissions'] || 0),
+            closedPoints: closedPoints,
+            achievementPct: achievement,
+        };
         if (record.bdeName && record.month) {
             records.push(record);
         }
@@ -716,7 +731,7 @@ const transformToSalesRecordsWithValidation = async (rows, branchName, headerMap
             }
 
             // Calculate achievement percentage: (Closed Points / Target) * 100
-            const achievementPct = target > 0 ? 
+            const achievementPct = target > 0 ?
                 parseFloat(((closedPoints / target) * 100).toFixed(2)) : 0;
 
             // BUILD COMPLETE RECORD - ALL FIELDS PERSISTED
@@ -911,17 +926,17 @@ const uploadToMongoDB = async (salesRecords, branchName) => {
             // Always update user information with the latest data from uploads
             await usersCollection.updateOne(
                 { name: user.name, branch: user.branch },
-                { 
-                    $set: { 
-                        role: user.role, 
-                        inactive: user.inactive, 
-                        isCurrentTeamMember: user.isCurrentTeamMember 
+                {
+                    $set: {
+                        role: user.role,
+                        inactive: user.inactive,
+                        isCurrentTeamMember: user.isCurrentTeamMember
                     },
-                    $setOnInsert: { 
-                        password: null, 
-                        email: null, 
-                        resetToken: null, 
-                        resetTokenExpires: null 
+                    $setOnInsert: {
+                        password: null,
+                        email: null,
+                        resetToken: null,
+                        resetTokenExpires: null
                     }
                 },
                 { upsert: true }
@@ -929,7 +944,7 @@ const uploadToMongoDB = async (salesRecords, branchName) => {
         }
 
         console.log(`Processed ${salesRecords.length} sales records and ${userMap.size} users for branch ${branchName}`);
-        
+
         // Return result object for caller
         return {
             insertedCount: salesRecords.length,
@@ -955,7 +970,7 @@ app.get('/api/data', async (req, res) => {
 
     try {
         const salesCollection = db.collection(SALES_RECORDS_COLLECTION);
-        
+
         const aggregation = [
             {
                 $lookup: {
@@ -986,10 +1001,10 @@ app.get('/api/data', async (req, res) => {
         if (!results || results.length === 0) {
             return res.status(404).json({ error: 'Data not in database. Please upload data first.' });
         }
-        
+
         // Debug: Log sample record to verify isCurrentTeamMember is included
         console.log('Sample record from /api/data:', JSON.stringify(results[0], null, 2).substring(0, 500));
-        
+
         const dataWithId = results.map(doc => ({ ...doc, id: doc._id.toString() }));
 
         return res.json(dataWithId);
@@ -1396,7 +1411,7 @@ app.post('/api/cleanup-duplicates', async (req, res) => {
         // Step 2: For each duplicate group, keep the most recent and delete others
         for (const group of duplicates) {
             const key = `${group._id.bdeName} | ${group._id.month} | FY${group._id.fy} | ${group._id.branch}`;
-            
+
             // Sort by uploadedAt (newest first) or by _id if uploadedAt not present
             const sorted = group.records.sort((a, b) => {
                 const timeA = new Date(a.uploadedAt || 0).getTime();
@@ -1851,7 +1866,7 @@ app.post('/api/send-access-email', async (req, res) => {
             // Update user with reset token
             await usersCollection.updateOne(
                 { _id: user._id },
-                { 
+                {
                     $set: {
                         passwordResetToken: hashedToken,
                         passwordResetExpires: expires
@@ -1964,7 +1979,7 @@ app.post('/api/set-password/:token', async (req, res) => {
         // Update user with new password and clear reset token
         await usersCollection.updateOne(
             { _id: user._id },
-            { 
+            {
                 $set: {
                     password: hashedPassword
                 },
@@ -2021,7 +2036,7 @@ app.post('/api/auth/reset-password', async (req, res) => {
         // Update user with new password and clear reset token
         await usersCollection.updateOne(
             { _id: user._id },
-            { 
+            {
                 $set: {
                     password: hashedPassword
                 },
@@ -2055,19 +2070,6 @@ app.use(express.static(path.join(__dirname, '..')));
 
 
 
-// DB connection middleware for serverless
-app.use(async (req, res, next) => {
-    try {
-        const db = getDB();
-        if (!db) {
-            await connectToDB();
-        }
-        next();
-    } catch (error) {
-        console.error('DB Connection error in middleware:', error);
-        res.status(500).json({ error: 'Database connection failed' });
-    }
-});
 
 // Export app for serverless
 module.exports = app;
