@@ -10,7 +10,7 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
@@ -24,13 +24,13 @@ export default function Login() {
     setIsLoading(true);
 
     const result = await login(username, password);
-    
+
     if (result.success) {
       navigate('/dashboard');
     } else {
       setError(result.message || 'Invalid credentials. Please try again.');
     }
-    
+
     setIsLoading(false);
   };
 
@@ -50,7 +50,7 @@ export default function Login() {
           className="text-center mb-8"
         >
           <div className="flex flex-col items-center gap-4 mb-8">
-            <img src="/hikeeducation_logo.jpg" alt="HikeEducation Logo" className="w-20 h-20 rounded-2xl" />
+            <img src="/logo.png" alt="HikeEducation Logo" className="w-20 h-20 rounded-2xl" />
             <div className="text-center">
               <h1 className="text-3xl font-bold gradient-text">HikeEducation</h1>
               <p className="text-muted-foreground">Dashboard Platform</p>
@@ -69,84 +69,84 @@ export default function Login() {
             <p className="text-muted-foreground mt-2">Sign in to access your dashboard</p>
           </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {error && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="p-4 bg-destructive/10 border border-destructive/20 rounded-lg"
-                >
-                  <p className="text-sm text-destructive">{error}</p>
-                </motion.div>
-              )}
-
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground">Username</label>
-                <div className="relative">
-                  <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                  <input
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    placeholder="Enter your username"
-                    className="input-field pl-12"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground">Password</label>
-                <div className="relative">
-                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                  <input
-                    type={showPassword ? 'text' : 'password'}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter your password"
-                    className="input-field pl-12 pr-12"
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                  </button>
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="p-4 bg-destructive/10 border border-destructive/20 rounded-lg"
               >
-                {isLoading ? (
-                  <div className="w-5 h-5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
-                ) : (
-                  <>
-                    Sign In
-                    <TrendingUp className="w-4 h-4" />
-                  </>
-                )}
-              </button>
-            </form>
+                <p className="text-sm text-destructive">{error}</p>
+              </motion.div>
+            )}
 
-            <div className="mt-8 pt-6 border-t border-border">
-              <p className="text-xs text-center text-muted-foreground mb-4">Demo Credentials</p>
-              <div className="grid grid-cols-2 gap-4 text-xs">
-                <div className="p-3 bg-muted/50 rounded-lg">
-                  <p className="font-medium text-foreground">Admin</p>
-                  <p className="text-muted-foreground">HikeVP / Hike@Akash</p>
-                </div>
-                <div className="p-3 bg-muted/50 rounded-lg">
-                  <p className="font-medium text-foreground">Manager</p>
-                  <p className="text-muted-foreground">HikeManagerMUM / Hike@MUM</p>
-                </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">Username</label>
+              <div className="relative">
+                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="Enter your username"
+                  className="input-field pl-12"
+                  required
+                />
               </div>
             </div>
-          </motion.div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">Password</label>
+              <div className="relative">
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter your password"
+                  className="input-field pl-12 pr-12"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                </button>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isLoading ? (
+                <div className="w-5 h-5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
+              ) : (
+                <>
+                  Sign In
+                  <TrendingUp className="w-4 h-4" />
+                </>
+              )}
+            </button>
+          </form>
+
+          <div className="mt-8 pt-6 border-t border-border">
+            <p className="text-xs text-center text-muted-foreground mb-4">Demo Credentials</p>
+            <div className="grid grid-cols-2 gap-4 text-xs">
+              <div className="p-3 bg-muted/50 rounded-lg">
+                <p className="font-medium text-foreground">Admin</p>
+                <p className="text-muted-foreground">HikeVP / Hike@Akash</p>
+              </div>
+              <div className="p-3 bg-muted/50 rounded-lg">
+                <p className="font-medium text-foreground">Manager</p>
+                <p className="text-muted-foreground">HikeManagerMUM / Hike@MUM</p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
       </motion.div>
     </div>
   );

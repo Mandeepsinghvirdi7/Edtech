@@ -70,7 +70,7 @@ export function Sidebar() {
   });
 
   return (
-    <motion.aside 
+    <motion.aside
       initial={{ x: -80, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       className="fixed left-0 top-0 h-screen w-64 bg-sidebar border-r border-sidebar-border flex flex-col z-50"
@@ -78,7 +78,7 @@ export function Sidebar() {
       {/* Logo */}
       <div className="p-6 border-b border-sidebar-border">
         <div className="flex items-center gap-3">
-          <img src="/hikeeducation_logo.jpg" alt="HikeEducation Logo" className="w-10 h-10 rounded-xl" />
+          <img src="/logo.png" alt="HikeEducation Logo" className="w-10 h-10 rounded-xl" />
           <div>
             <h1 className="text-lg font-bold text-sidebar-foreground">HikeEducation Dashboard</h1>
             <p className="text-xs text-muted-foreground">Dashboard v1.0</p>

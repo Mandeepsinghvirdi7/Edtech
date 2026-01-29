@@ -74,7 +74,7 @@ export default function SetPassword() {
           className="text-center mb-8"
         >
           <div className="flex flex-col items-center gap-4 mb-8">
-            <img src="/hikeeducation_logo.jpg" alt="HikeEducation Logo" className="w-20 h-20 rounded-2xl" />
+            <img src="/logo.png" alt="HikeEducation Logo" className="w-20 h-20 rounded-2xl" />
             <div className="text-center">
               <h1 className="text-3xl font-bold gradient-text">HikeEducation</h1>
               <p className="text-muted-foreground">Dashboard Platform</p>
