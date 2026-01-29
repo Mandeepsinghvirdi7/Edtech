@@ -12,6 +12,8 @@ import {
   Tooltip,
   Legend,
   Filler,
+  BarController,
+  LineController,
 } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Chart } from 'react-chartjs-2';
@@ -30,6 +32,8 @@ ChartJS.register(
   Tooltip,
   Legend,
   Filler,
+  BarController,
+  LineController,
   ChartDataLabels
 );
 
@@ -45,18 +49,18 @@ export function PerformanceChart({ data, title, currentDrive }: PerformanceChart
 
   const totalTarget = useMemo(() => data.reduce((sum, d) => sum + d.target, 0), [data]);
   const totalClosedPoints = useMemo(() => data.reduce((sum, d) => sum + d.closedPoints, 0), [data]);
-  
+
   // Calculate points to achieve 100% from October to current month
   const pointsToAchieve100 = useMemo(() => {
     // Find October index
     const octoberIndex = data.findIndex(d => d.label === 'OCT');
     if (octoberIndex === -1) return totalTarget - totalClosedPoints;
-    
+
     // Sum from October to the end
     const relevantData = data.slice(octoberIndex);
     const totalTargetFromOct = relevantData.reduce((sum, d) => sum + d.target, 0);
     const totalClosedFromOct = relevantData.reduce((sum, d) => sum + d.closedPoints, 0);
-    
+
     return Math.max(0, totalTargetFromOct - totalClosedFromOct);
   }, [data, totalTarget, totalClosedPoints]);
   const overallAchievement = useMemo(() => {
